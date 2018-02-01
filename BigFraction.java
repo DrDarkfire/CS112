@@ -66,12 +66,17 @@ public class BigFraction {
 		BigInteger top2 = denominator.multiply(b.numerator);
 		BigInteger topfinal = top1.add(top2);
 		BigInteger bottom = denominator.multiply(denominator);
-		numerator = topfinal;
-		denominator = bottom;
+		BigFraction sum = new BigFraction(topfinal, bottom);
+		return sum;
 	}
 	
 	public BigFraction subtract(BigFraction b) {
-		
+		BigInteger top1 = numerator.multiply(b.denominator);
+		BigInteger top2 = denominator.multiply(b.numerator);
+		BigInteger topfinal = top1.subtract(top2);
+		BigInteger bottom = denominator.multiply(denominator);
+		BigFraction difference = new BigFraction(topfinal, bottom);
+		return difference;
 	}
 	
 	public BigFraction multiply(BigFraction b) {
