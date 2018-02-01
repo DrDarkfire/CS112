@@ -58,7 +58,9 @@ public class BigFraction {
 		return top / bottom;
 	
 	public BigFraction negate() {
-		return BigFraction(numerator.negate(), denominator);
+		BigInteger num = numerator.negate();
+		BigFraction neg = new BigFraction(num, denominator);
+		return neg;
 	}
 	
 	public BigFraction add(BigFraction b) { 
