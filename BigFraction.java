@@ -80,10 +80,16 @@ public class BigFraction {
 	}
 	
 	public BigFraction multiply(BigFraction b) {
-		
+		BigInteger top = numerator.multiply(b.numerator);	
+		BigInteger bottom = denominator.multiply(b.denominator);
+		BigFraction product = new BigFraction(top, bottom);
+		return product;
 	}
 	
 	public BigFraction divide(BigFraction b) {
-		
+		BigInteger top = numerator.multiply(b.denominator);	
+		BigInteger bottom = denominator.multiply(b.numerator);
+		BigFraction quotient = new BigFraction(top, bottom);
+		return quotient;
 	}
 }
