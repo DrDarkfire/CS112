@@ -1,5 +1,7 @@
 import java.math.*;
 
+// BigFraction is a class designed to handle fractions that are created by strings
+// and done to the specifications of this: http://cs.gettysburg.edu/~tneller/cs112/bigfraction/BigFraction.html
 public class BigFraction {
 	public static final BigFraction ONE;
 	public static final BigFraction ZERO;
@@ -54,4 +56,23 @@ public class BigFraction {
 		
 	}
 	
+	public BigFraction negate() {
+		
+	}
+	
+	public BigFraction add(BigFraction b) { 
+		
+	}
+	
+	public BigFraction subtract(BigFraction b) {
+		
+	}
+	
+	public BigFraction multiply(BigFraction b) {
+		
+	}
+	
+	public BigFraction divide(BigFraction b) {
+		
+	}
 }
