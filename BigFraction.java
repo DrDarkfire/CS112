@@ -55,7 +55,8 @@ public class BigFraction {
 	public BigDecimal asBigDecimal(int scale, int roundingMode) {
 		BigDecimal top = new BigDecimal(numerator).setScale(scale, roundingMode);
 		BigDecimal bottom = new BigDecimal(denominator).setScale(scale, roundingMode);
-		return top / bottom;
+		return top.divide(bottom);
+	}
 	
 	public BigFraction negate() {
 		BigInteger num = numerator.negate();
