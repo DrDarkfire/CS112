@@ -28,9 +28,11 @@ public class BigFraction {
 	}
 	
 	// converts long values into a string so it can be used as BigIntegers/BigFractions
-	public BigFraction(long numerator, long denominator) {
-		String n = String.valueOf(numerator);
-		String d = String.valueOf(denominator);
+	public BigFraction(long num, long denom) {
+		String n = String.valueOf(num);
+		String d = String.valueOf(denom);
+		numerator = new BigInteger(n);
+		denominator = new BigInteger(d);
 	}
 	
 	public BigFraction(BigFraction f) {
