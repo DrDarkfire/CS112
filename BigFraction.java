@@ -3,8 +3,8 @@ import java.math.*;
 // BigFraction is a class designed to handle fractions that are created by strings
 // and done to the specifications of this: http://cs.gettysburg.edu/~tneller/cs112/bigfraction/BigFraction.html
 public class BigFraction {
-	public static final BigFraction ONE;
-	public static final BigFraction ZERO;
+	public static final BigFraction ONE = new BigFraction("1/1");
+	public static final BigFraction ZERO = new BigFraction("0/0");
 	private BigInteger numerator;
 	private BigInteger denominator;
 	
