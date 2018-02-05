@@ -47,17 +47,20 @@ public class DPFun {
 		}
 	}
 	
+	public static final int[] PIECES = new int[2000];
+	public ArrayList<Integer> winLoss = new ArrayList<Integer>();
 	public static int nimSubtractionGameDP(int n) {
 		if (n == 0) 
-			return LOSS;
-		else {
+			PIECES[0] = LOSS;
+		else if (PIECES[n] == 0){
 			int maxPieces = Math.min(n, MAX);
 			boolean canWin = false;
 			for (int pieces = 1; pieces <= maxPieces; ++pieces)
 				if (nimSubtractionGameDP(n - pieces) == LOSS)
 					canWin = true;
-			return canWin ? WIN : LOSS;
+			PIECES[n] = canWin ? WIN : LOSS;
 		}
+		return PIECES[n];
 	}
 	
 	public static void main(String[] args) {
