@@ -14,8 +14,9 @@ public class ToadsAndFrogsSolver {
 		in.close();
 	}
 
-	private static char opponentPlayer;
-	public static char getWinner(char[] board, char currentPlayer) {	
+	
+	public static char getWinner(char[] board, char currentPlayer) {
+		char opponentPlayer = 0;
 		// Algorithm: 
 		// For each legal move for the current player,
 		if(currentPlayer == TOAD)
@@ -34,7 +35,9 @@ public class ToadsAndFrogsSolver {
 						board[i + 2] = currentPlayer;
 						board[i] = EMPTY;
 					}
-					else if((board[i + 1] == opponentPlayer) && board[i + 2] == opponentPlayer){
+					else if(i == board.length - 2 && board[i +1] == opponentPlayer)
+							return getWinner(board, opponentPlayer);
+					else if(i <= (board.length - 3) && board[i + 1] == opponentPlayer && board[i + 2] == opponentPlayer){
 						return getWinner(board, opponentPlayer);
 					}
 					else
@@ -52,7 +55,9 @@ public class ToadsAndFrogsSolver {
 						board[i - 2] = currentPlayer;
 						board[i] = EMPTY;
 					}
-					else if((board[i - 1] == opponentPlayer) && board[i - 2] == opponentPlayer){
+					else if(i == 2 && board[i - 1] == opponentPlayer)
+						return getWinner(board, opponentPlayer);
+					else if(i <= 3 && (board[i - 1] == opponentPlayer) && board[i - 2] == opponentPlayer){
 						return getWinner(board, opponentPlayer);
 					}
 					else
