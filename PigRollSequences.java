@@ -1,17 +1,19 @@
 import java.util.*;
 public class PigRollSequences {
-	public static ArrayList<Integer> numHolder = new ArrayList<Integer>();
-	public int i = 0;
+		private static int[] numHolder = new int[200];
 	public static int getNumSequences(int turnTotal) {
-		int i = 0;
-		if (turnTotal == 0 || turnTotal == 1)
-			numHolder.add(0);
-		if (turnTotal == 2 || turnTotal == 3)
-			numHolder.add(1);
-		else {
-			i = numHolder.get(turnTotal - 2) + numHolder.get(turnTotal - 1);
-		}
-		return i;
+		if( turnTotal == 0)
+			numHolder[0] = 0;
+		else if ( turnTotal == 1)
+			numHolder[1] = 0;
+		else if ( turnTotal == 2)
+			numHolder[2] = 1;
+		else if ( turnTotal == 3)
+			numHolder[3] = 1;
+		else
+			numHolder[turnTotal - 1] = getNumSequences(turnTotal - 2) + getNumSequences(turnTotal - 3) + getNumSequences(turnTotal - 4) + getNumSequences(turnTotal - 5);
+		return numHolder[turnTotal];
+	}
 	}
 	public static void main(String[] args) {
 		System.out.println(getNumSequences(2));
