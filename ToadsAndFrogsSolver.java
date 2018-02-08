@@ -23,49 +23,52 @@ public class ToadsAndFrogsSolver {
 			opponentPlayer = FROG;
 		if(currentPlayer == FROG)
 			opponentPlayer = TOAD;
-		if(currentPlayer == TOAD)
+		if(currentPlayer == TOAD){
 			for (int i = 0; i < board.length; i++) {
 				if (board[i] == currentPlayer)
 				{
 					if(i <= (board.length - 2) && board[i+1] == EMPTY){
 						board[i + 1] = currentPlayer;
 						board[i] = EMPTY;
+						return getWinner(board, opponentPlayer);
 					}
 					else if(i <= (board.length - 3) && board[i+2] == EMPTY){
 						board[i + 2] = currentPlayer;
 						board[i] = EMPTY;
-					}
-					else if(i == board.length - 2 && board[i +1] == opponentPlayer)
-							return getWinner(board, opponentPlayer);
-					else if(i <= (board.length - 3) && board[i + 1] == opponentPlayer && board[i + 2] == opponentPlayer){
 						return getWinner(board, opponentPlayer);
 					}
-					else
-						return currentPlayer;
+					else if(i == board.length - 2 && (board[i +1] == opponentPlayer))
+							return getWinner(board, opponentPlayer);
+//					else if(i <= (board.length - 3) && (board[i + 1] == opponentPlayer /*|| board[i + 1] == currentPlayer*/) && (board[i + 2] == opponentPlayer /*|| board[i + 2] == currentPlayer*/)){
+//						return getWinner(board, opponentPlayer);
+					//}
 				}
 			}
-		else
+			return getWinner(board, opponentPlayer);
+		}
+		if (currentPlayer == FROG) {
 			for(int i = board.length - 1; i >= 0; i--){
 				if (board[i] == currentPlayer){
 					if(i >= 1 && board[i - 1] == EMPTY){
 						board[i - 1] = currentPlayer;
 						board[i] = EMPTY;
+						return getWinner(board, opponentPlayer);
 					}
 					else if(i >= 2 && board[i - 2] == EMPTY){
 						board[i - 2] = currentPlayer;
 						board[i] = EMPTY;
-					}
-					else if(i == 2 && board[i - 1] == opponentPlayer)
-						return getWinner(board, opponentPlayer);
-					else if(i <= 3 && (board[i - 1] == opponentPlayer) && board[i - 2] == opponentPlayer){
 						return getWinner(board, opponentPlayer);
 					}
-					else
-						return currentPlayer;
+					else if(i == 1 && board[0] == opponentPlayer)
+						return getWinner(board, opponentPlayer);
+//					else if(i >= 3 && (board[i - 1] == opponentPlayer  /*|| board[i - 1] == currentPlayer*/) && (board[i - 2] == opponentPlayer /*|| board[i - 2] == currentPlayer*/)){
+//						return getWinner(board, opponentPlayer);
+					//}
 				}
 			}
-
-		return getWinner(board, opponentPlayer);
+			return getWinner(board, opponentPlayer);
+		}
+		return opponentPlayer;
 				
 		//   - if we call getWinner on the resulting game state (new board, other player)
 		//     and find that this leads to a win for the current player, 
