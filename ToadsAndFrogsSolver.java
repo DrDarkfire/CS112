@@ -14,97 +14,61 @@ public class ToadsAndFrogsSolver {
 		in.close();
 	}
 
-	
+
 	public static char getWinner(char[] board, char currentPlayer) {
-		char opponentPlayer = 0;
-		System.out.println(currentPlayer);
+		char opponentPlayer;
+		if (currentPlayer == TOAD)
+			opponentPlayer = FROG;
+		else
+			opponentPlayer = TOAD;
+		int dir = 0;
+		if (currentPlayer == TOAD)
+			dir = 1;
+		else
+			dir = -1;
 		// Algorithm: 
 		// For each legal move for the current player,
-		if(currentPlayer == TOAD)
-			opponentPlayer = FROG;
-		if(currentPlayer == FROG)
-			opponentPlayer = TOAD;
-		int toadcount = 0;
-		int frogcount = 0;
-		for (char ch : board) {
-			if(ch == TOAD)
-				toadcount++;
-			if(ch == FROG)
-				frogcount++;
-		}
-		if(currentPlayer == TOAD){
-			for (int i = 0; i < board.length; i++) {
-				if (board[i] == currentPlayer)
+		for(int i = 0; i < board.length; i++) {
+			if(i + dir >= 0 && i + dir < board.length && board[i] == currentPlayer && board[i + dir] == EMPTY) {
+				board[i] = EMPTY;
+				board[i + dir] = currentPlayer;
+				char winner = getWinner(board, opponentPlayer);
+				board[i] = currentPlayer;
+				board[i + dir] = EMPTY;
+				boolean win = false; 
+				if(winner == currentPlayer)
 				{
-					if(board[0] == FROG && board[frogcount - 1] == FROG) {
-						System.out.println(board);
-						return currentPlayer;
-							}
-					if(i <= (board.length - 2) && board[i+1] == EMPTY){
-						board[i + 1] = currentPlayer;
-						board[i] = EMPTY;
-						System.out.println(board);
-						return getWinner(board, opponentPlayer);
-					}
-					else if(i <= (board.length - 3) && board[i+2] == EMPTY && board[i+1] != TOAD){
-						board[i + 2] = currentPlayer;
-						board[i] = EMPTY;
-						System.out.println(board);
-						return getWinner(board, opponentPlayer);
-					}
-					
-					
-					//else if(i == board.length - 2 && (board[i +1] == opponentPlayer))
-							//return getWinner(board, opponentPlayer);
-//					else if(i <= (board.length - 3) && (board[i + 1] == opponentPlayer /*|| board[i + 1] == currentPlayer*/) && (board[i + 2] == opponentPlayer /*|| board[i + 2] == currentPlayer*/)){
-//						return getWinner(board, opponentPlayer);
-					//}
+					win = true;
 				}
-				if(i == board.length -1)
-					return opponentPlayer;
+				if(win == true)
+				{
+					return currentPlayer;
+				}
 			}
-			//System.out.println(board);
-			return getWinner(board, opponentPlayer);
+			if(i + (2 * dir) >= 0 && i + (2 * dir) < board.length && board[i] == currentPlayer && board[i + (2 * dir)] == EMPTY) {
+				board[i] = EMPTY;
+				board[i + (2*dir)] = currentPlayer;
+				char winner = getWinner(board, opponentPlayer);
+				board[i] = currentPlayer;
+				board[i + (2*dir)] = EMPTY;
+				boolean win = false; 
+				if(winner == currentPlayer)
+				{
+					win = true;
+				}
+				if(win == true)
+				{
+					return currentPlayer;
+				}
+			}
 		}
-		if (currentPlayer == FROG) {
-			for(int i = board.length - 1; i >= 0; i--){
-				if (board[i] == currentPlayer){
-					if(board[board.length -1] == TOAD && board[board.length - toadcount] == TOAD) {
-						return currentPlayer;
-							}
-					if(i >= 1 && board[i - 1] == EMPTY){
-						board[i - 1] = currentPlayer;
-						board[i] = EMPTY;
-						System.out.println(board);
-						return getWinner(board, opponentPlayer);
-					}
-					else if(i >= 2 && board[i - 2] == EMPTY && board[i - 1] != FROG){
-						board[i - 2] = currentPlayer;
-						board[i] = EMPTY;
-						System.out.println(board);
-						return getWinner(board, opponentPlayer);
-					}
-					
+		return opponentPlayer;
 
-					//else if(i == 1 && board[0] == opponentPlayer)
-						//return getWinner(board, opponentPlayer);
-					
-					}
-				if(i == 0)
-					return opponentPlayer;
-//					else if(i >= 3 && (board[i - 1] == opponentPlayer  /*|| board[i - 1] == currentPlayer*/) && (board[i - 2] == opponentPlayer /*|| board[i - 2] == currentPlayer*/)){
-//						return getWinner(board, opponentPlayer);
-					//}
-				}
-			
-			}
-			//System.out.println(board);
-			return getWinner(board, opponentPlayer);
-		}
-				
+
 		//   - if we call getWinner on the resulting game state (new board, other player)
 		//     and find that this leads to a win for the current player, 
 		//     then return the current player.
 		// Otherwise, failing to find a winning play (or any legal play), return the opponent player.
+	}
 }
 
