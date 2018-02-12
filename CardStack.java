@@ -37,18 +37,19 @@ public class CardStack {
 	}
 	
 	public Card removeTopCard() {
-		return null;
+		return stack.empty() ? null : stack.pop();
 	}
 	
 	public int size() {
-		return 0;
+		return stack.size();
 	}
 	
 	public java.lang.String toString() {
-		return null;
+		String s = stack.toString();
+		return s.substring(1, s.length());
 	}
 	
 	public Card[] toArray() {
-		return null;
+		return stack.toArray(new Card[stack.size()]);
 	}
 }
