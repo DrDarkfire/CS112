@@ -12,7 +12,7 @@ public class FreecellGame {
     	int i = 9;
     	while (!stacks[0].isEmpty()) {
     		stacks[i++].addCard(stacks[0].removeTopCard());
-    		if (i == stacks.length + 1)
+    		if (i == stacks.length)
     			i = 9;
     	}
     }
