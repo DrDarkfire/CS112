@@ -1,16 +1,17 @@
-
 public class Cascade extends CardStack {
-	
-	public static boolean[] suitIsRed = {false, true, true, false};
 
-	public Cascade() {
-		return;
-	}
+	public Cascade() {}
 	
 	public boolean playTo(Card card) {
-		if (stack.isEmpty() || (suitIsRed[card.getSuit()] != suitIsRed[stack.peek().getSuit()] 
-				&& card.getRank() == (stack.peek().getRank() - 1)))
+		if (stack.isEmpty()) {
+			stack.add(card);
 			return true;
+		}
+		else if ((Card.suitIsRed[card.getSuit()] != Card.suitIsRed[stack.peek().getSuit()] 
+				&& card.getRank() == stack.peek().getRank() - 1)) {
+			stack.add(card);
+			return true;
+		}
 		return false;
 	}
 
