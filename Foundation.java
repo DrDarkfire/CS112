@@ -1,19 +1,24 @@
 
 public class Foundation extends CardStack {
-	public Foundation() {
-		return;
-	}
-	
+
+	public Foundation() {}
+
 	public boolean canPlayFrom() {
-		return !stack.empty();
+		return false;
 	}
-	
+
 	public boolean playTo(Card card) {
-		if ((stack.isEmpty() && card.getRank() == 0) || (!stack.isEmpty()
-				&& card.getSuit() == stack.peek().getSuit() && card.getRank()
-				== (stack.peek().getRank() + 1))) {
+		if ((stack.empty() && card.getRank() == 0)) {
+			stack.add(card);
+			return true;
+		}
+
+		else if ((!stack.empty() && (card.getSuit() == stack.peek().getSuit()) &&
+				(card.getRank() == stack.peek().getRank() + 1))) {
+			stack.add(card);
 			return true;
 		}
 		return false;
 	}
 }
+
