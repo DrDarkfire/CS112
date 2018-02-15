@@ -5,18 +5,8 @@ public class Freecell {
 	public Freecell() {}
 	
 	public static void play() {
-		Scanner in = new Scanner(System.in);
 		long seed = (long) (Math.random() * 10000);
-		FreecellGame game = new FreecellGame(seed);
-		System.out.println(game.toString());
-		//while(!FreecellGame.isGameOver()) {
-		System.out.println("\r\n" + 
-				"Please enter source and destination card stacks, or \"-1\" to quit: \n");
-		int move = in.nextInt();
-			
-		//}
-		
-		
+		play(seed);
 	}
 	
 	public static void play(long seed) {
@@ -25,10 +15,14 @@ public class Freecell {
 		//long seed = in.nextLong();
 		FreecellGame game = new FreecellGame(seed);
 		System.out.println(game + "\n");
-		//while(!FreecellGame.isGameOver()) {
-		System.out.println("\r\n" + 
+		while(!game.isGameOver()) {
+			System.out.println("\r\n" + 
 				"Please enter source and destination card stacks, or \"-1\" to quit: \n");
-		int move = in.nextInt();
+			int move = in.nextInt();
+			int to   = in.nextInt();
+			game.play(move, to);
+			System.out.println(game + "\n");
+		}
 	}
 	
 	public static void main(String[] args) {
