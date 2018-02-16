@@ -6,9 +6,12 @@ public class FreecellGame {
 
 	public FreecellGame(long seed)  {
 		stacks[0] = new Deck(seed);
-		// You'll change this to make specific CardStacks
-		for (int i = 1; i < stacks.length; i++)
-			stacks[i] = new CardStack();
+		for (int i = 1; i <= 4; i++)
+			stacks[i] = new Cell();
+		for (int i = 5; i < 9; i++)
+			stacks[i] = new Foundation();
+		for (int i = 9; i < stacks.length; i++)
+			stacks[i] = new Cascade();
 		// deal deck into the cascades
 		int i = 9;
 		while (!stacks[0].isEmpty()) {
@@ -69,16 +72,16 @@ public class FreecellGame {
 	//toString
 	public java.lang.String toString(){
 		String output;
-		output = "Cells: \n";
+		output = "Cells:\n";
 		for (int i = 1; i <= 4; i++)
-			output += " " + i + ": " + Arrays.toString(getStack(i)) + "\n";
-		output += "Foundations: \n";
+			output += " " + i + ": " + Arrays.toString(getStack(i)).substring(1, Arrays.toString(getStack(i)).length() - 1) + "\n";
+		output += "Foundations:\n";
 		for (int j = 5; j <= 8; j++)
-			output += " " + j + ": " + Arrays.toString(getStack(j)) + "\n";
-		output += "Cascades: \n";
-		output += " 9: " + Arrays.toString(getStack(9)) + "\n";
+			output += " " + j + ": " + Arrays.toString(getStack(j)).substring(1, Arrays.toString(getStack(j)).length() -1 ) + "\n";
+		output += "Cascades:\n";
+		output += " 9: " + Arrays.toString(getStack(9)).substring(1, Arrays.toString(getStack(9)).length() - 1) + "\n";
 		for (int k = 10; k <= 16; k++)
-			output += k + ": " + Arrays.toString(getStack(k)) + "\n";
+			output += k + ": " + Arrays.toString(getStack(k)).substring(1, Arrays.toString(getStack(k)).length() - 1) + "\n";
 		return output;
 	}
 
@@ -87,4 +90,3 @@ public class FreecellGame {
 
 
 }
-
