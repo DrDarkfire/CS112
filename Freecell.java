@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Freecell {
+public class Freecell extends CardStack {
 
 	public Freecell() {}
 	
@@ -10,24 +10,27 @@ public class Freecell {
 	}
 	
 	public static void play(long seed) {
-		Scanner in = new Scanner(System.in);
-		//System.out.println("Play Freecell with seed: ");
-		//long seed = in.nextLong();
 		FreecellGame game = new FreecellGame(seed);
-		System.out.println(game + "\n");
-		while(!game.isGameOver()) {
-			System.out.println("\r\n" + 
-				"Please enter source and destination card stacks, or \"-1\" to quit: \n");
+		System.out.println(game);
+		int count = 0;
+		while(!game.isGameOver() && count < 500) {
+			Scanner in = new Scanner(System.in);
+			System.out.print("Please enter source and destination card stacks, or \"-1\" to quit: ");
 			int move = in.nextInt();
 			int to   = in.nextInt();
 			game.play(move, to);
-			System.out.println(game + "\n");
+			System.out.println("\n" + game);
+			count++;
 		}
+		if (count >= 499)
+		{
+			System.out.println("YOU LOSE");
+		}
+		System.out.println("YOU WIN!");
 	}
 	
 	public static void main(String[] args) {
-		long zero = 0;
-		play(zero);
+		play(0);
 	}
 
 }
