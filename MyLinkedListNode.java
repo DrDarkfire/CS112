@@ -2,8 +2,12 @@
 public class MyLinkedListNode<E> {
 	// Note that it's sometimes preferable to allow
 	// mutable objects with accessible fields.
+	
+	// How you can declare a generic method in a non-generic class
+	// motivation for generics
+	//
 	E item;
-	MyLinkedListNode<E> next;
+	MyLinkedListNode<E> next = null;
 	/**
 	 * @param item
 	 */
@@ -18,7 +22,4 @@ public class MyLinkedListNode<E> {
 		this.item = item;
 		this.next = next;
 	}
-	
-	
-	
 }
