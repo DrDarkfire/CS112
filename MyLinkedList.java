@@ -1,13 +1,13 @@
 import java.util.NoSuchElementException;
 
 public class MyLinkedList<E> {
-	MyLinkedListNode<E> head;
-	MyLinkedListNode<E> tail;
+	MyLinkedListNode<E> head = null;
+	MyLinkedListNode<E> tail = null;
 	
 	
 	public static void main(String[] args) {
          MyLinkedList<Integer> list = new MyLinkedList<Integer>();
-         java.util.Random random = new java.util.Random();
+         java.util.Random random = new java.util.Random(3);
          int trials = 20;
          for (int i = 0; i < trials; i++) { 
               int op = random.nextInt(3);
@@ -69,8 +69,26 @@ public class MyLinkedList<E> {
 		head = newNode;
 	}
 
-	private int removeHead() {
-		return 0;
+	private E removeHead() {
+		if (head == null)
+			throw new NoSuchElementException("MyLinkedList is empty");
+		E retVal =  head.item;
+		head = head.next;
+		if (head == null)
+			tail = null;
+		return retVal;
+	}
+	public String toString() {
+		StringBuilder sb = new StringBuilder("[");
+		MyLinkedListNode<E> current = head;
+		while (current != null) {
+			sb.append(current.item);
+			current = current.next;
+			if (current != null)
+				sb.append(", ");
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 }
 
