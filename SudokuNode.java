@@ -55,9 +55,19 @@ public class SudokuNode extends SearchNode {
 		while(!isGoal())
 		{
 			for (int i = 0; i < 9; i++)
-				for (int j = 0; j < 9; j++)
-					if(SudokuSolver[i][j] == '.')
-						
+				for (int j = 0; j < 9; j++) {
+					int a[] = new int[27];
+					if(SudokuSolver[i][j] == '.') {
+						for (int k = 0; k < 9; k++) {
+							a[k] = SudokuSolver[k][j];
+						}
+						for (int l = 0; l < 9; l++) {
+							a[9+l] = SudokuSolver[i][l];
+						}
+						//for (int m = 0; m < 9; m++)
+							//if ()
+					}
+				}						
 						
 			return children;
 		}
