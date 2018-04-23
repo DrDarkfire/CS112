@@ -1,13 +1,15 @@
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Location {
-	
-	String name;
-	String description;
+
+	public String name;
+	public String description;
 	boolean isVisited = false;
-	
+	public Set<Item> items = new HashSet<>();
 	public HashMap<String, Location> exits = new HashMap<String, Location>();
-	
+
 	public Location(String name, String description) {
 		this.name = name;
 		this.description = description;
@@ -21,9 +23,16 @@ public class Location {
 			sb.append("\n" + description);
 			isVisited = true;
 		}
-		sb.append("\nExits:");
-		for (String dir : exits.keySet())
-			sb.append(" " + dir);
+		if (!items.isEmpty()) {
+			sb.append("\nYou see:");
+			for (Item item : items)
+				sb.append(" " + item);
+		}
+		if (!exits.isEmpty()) {
+			sb.append("\nExits:");
+			for (String dir : exits.keySet())
+				sb.append(" " + dir);
+		}
 		return sb.toString();
 	}
 }
