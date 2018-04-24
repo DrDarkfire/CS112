@@ -3,7 +3,7 @@ import java.util.Set;
 
 public class Item {
 	String name, description, gettable;
-	public Set<Object> attributes = new HashSet<>();
+	public Set<String> attributes = new HashSet<>();
 
 	public Item(String name, String description, String gettable) {
 		this.name = name;
