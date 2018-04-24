@@ -1,23 +1,58 @@
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class IFGame {
+	// create set or ArrayList for items
 	Location location; // player location
-	Location glatfelter, tunnels, speakeasy;
+	Location road, tunnels, dungeon, cabin, boi, secretRoom;
 	Scanner in = new Scanner(System.in);
 	boolean echoOn;
-	Item[] inventory;
-	
+	public Set<Item> inventory = new HashSet<>();
+
 	public IFGame(boolean echoOn) {
 		this.echoOn = echoOn;
 		initialize();
 		play();
 	}
-	
+
+	private void initialize() {
+		// locations
+		road = new Location("A long windy road", "You are on a gravelly old road in a misty town. You see a cabin east.", true);
+		tunnels = new Location("Secret Tunnels", "You're in a tight, damp, dark tunnel with a faint light east.", true);
+		dungeon = new Location("Dungeon", "You stumble into a dark dungeon with remenants of torture tools around you.", true);
+		cabin = new Location("Cabin", "You enter a brown, old cabin with a living room and a trapdoor hidden on the ground.", true);
+		boi = new Location("Dat boi", "You approach Dat boi from a distance and hear him saying 'Get your keys here!'", true);
+		secretRoom = new Location("Secret Room", "A secret room with treasure everywhere.", false);
+		location = road;
+
+		cabin.exits.put("d", tunnels);
+		cabin.exits.put("w", road);
+		road.exits.put("e", cabin);
+		road.exits.put("w", boi);
+		tunnels.exits.put("u", cabin);
+		tunnels.exits.put("e", dungeon);
+		dungeon.exits.put("w", tunnels);
+		dungeon.exits.put("e", secretRoom);
+		boi.exits.put("e", road);
+
+		// items
+		Item hkey2 = new Item("Key Bottom", "It's the bottom half of a rusty golden key", "gettable");
+		dungeon.items.add(hkey2);
+		hkey2.attributes.add("rusty");
+		Item hkey1 = new Item("Key Top", "It's the top half of a rusty golden key.", "gettable");
+		boi.items.add(hkey1);
+		Item secretDoor = new Item("Door", "Its a dark heavy door", "not gettable");
+		dungeon.items.add(secretDoor);
+		inventory = null;
+	}
+
 	private void play() {
 		while (true) {
-			System.out.print("\nlocation");
-			System.out.print("? ");
+			System.out.println("Location: " + location);
+			System.out.println("Your inventory is: " + inventory);
+			System.out.println("What do you want to do? ");			
 			String command = in.nextLine().trim();
 			if (echoOn)
 				System.out.println(command);
@@ -26,42 +61,29 @@ public class IFGame {
 				System.exit(0);
 			}
 			else if (command.equals("look")) {
-				System.out.println(location.description);
+				location.isVisited = false;
 			}
-			else { // move
+			else if (command.equals("take Key Bottom")) {
+				//inventory.add(location.items.contains(o));
+				//location.items.remove(thing);
+				
+			}
+			else { //move
 				// OK for now but not for later
 				// default else should be for unrecognized verbs
 				Location nextLocation = location.exits.get(command);
 				if (nextLocation == null)
 					System.out.println("You can't go that way.");
+				else if (nextLocation.enterable == false)
+					System.out.println("The door is locked");
 				else
 					location = nextLocation;
-					System.out.println(location.toString());
 			}
-		}
+		}			
 	}
 
-	private void initialize() {
-		// locations
-		glatfelter = new Location("Glatfelter Lodge", "An old stone building with red pointing and cool stained-glass owls stands before you");
-		tunnels = new Location("Secret Tunnels", "You're in a network of secret tunnels that tend east-west");
-		speakeasy = new Location("The Undercard", "This underground gin joint has the art deco look and jazz sounds straight out of the roaring 20's");
-		location = glatfelter;
-		
-		glatfelter.exits.put("d", tunnels);
-		tunnels.exits.put("u", glatfelter);
-		tunnels.exits.put("e", speakeasy);
-		speakeasy.exits.put("w", tunnels);
-		
-		// items
-		Item whiskeyBottle = new Item("whiskey bottle", "It's a bottle. It contains whiskey");
-		speakeasy.items.add(whiskeyBottle);
-		Item plant = new Item("pothos plant", "It's a pothos of the distinguished Glatfelter lineage.");
-		glatfelter.items.add(plant);
-		System.out.print(location.toString());
+	public static void main(String[] args) {
+		new IFGame(Arrays.asList(args).contains("-e"));
 	}
 
-	public static void main(String[] arghs) {
-		new IFGame(Arrays.asList(arghs).contains("-e"));
-	}
 }
