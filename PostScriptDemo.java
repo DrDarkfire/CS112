@@ -20,6 +20,10 @@ public class PostScriptDemo { //PostScript stack machine demonstration
 			String t = in.next(tokenRegex);
 			if (t.matches(doubleRegex))
 				tokens.add(Double.parseDouble(t));
+			else if (t.equals("{"))
+				tokens.add(getTokens(in));
+			else if (t.equals("}"))
+				break;
 			else
 				tokens.add(t);
 		}
@@ -71,9 +75,38 @@ public class PostScriptDemo { //PostScript stack machine demonstration
 					String literal = (String) stack.pop();
 					map.put(literal.substring(1), value);
 				}
+				else if (s.equals("dup"))
+					stack.push(stack.peek());
+				else if (s.equals("pop"))
+					stack.pop();
+				else if (s.equals("exch")) {
+					Object o1 = stack.pop();
+					Object o2 = stack.pop();
+					stack.push(o1);
+					stack.push(o2);
+				}
+				else if (s.equals("ifelse")) {
+					List<Object> elseBlock = (List<Object>) stack.pop();
+					List<Object> ifBlock = (List<Object>) stack.pop();
+					Boolean condVal = (Boolean) stack.pop();
+					interpret(condVal ? ifBlock : elseBlock);
+				}
+				else if (s.equals("loop")) {
+					List<Object> loopBlock = (List<Object>) stack.pop();
+					try {
+						while (true)
+							interpret(loopBlock);
+					}
+					catch (LoopExitException e) {} // loop exited
+				}
+				else if (s.equals("exit"))
+					throw new LoopExitException();
 				else {
 					Object value = map.get(s);
-					stack.push(value);
+					if (value instanceof List)
+						interpret((List<Object>) value);
+					else
+						stack.push(value);
 				}
 			}
 			else
