@@ -1,4 +1,6 @@
 package application;
+// This Calculator is brought to you by Brandon Hall
+import java.util.Stack;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -18,10 +20,13 @@ public class Calculator extends Application
 	// the calculator dimensions
 	public static int CALC_WIDTH = 400;
 	public static int CALC_HEIGHT = 300;
-
+	// the two stacks
+	private Stack<Double> numbers = new Stack<Double>();
+	private Stack<Operator> operators = new Stack<Operator>();
+	// the number string
+	private String curNum = "";
 	// the calculator screen
-	private TextField screen; 
-
+	private TextField screen;
 	// the calculator buttons
 	private Button button1;
 	private Button button2;
@@ -43,7 +48,22 @@ public class Calculator extends Application
 	private Button buttonEq;
 	private Button buttonPow;
 	private Button buttonClear;
-
+	
+	public void operatorHandler(Operator op) {
+		while (!operators.isEmpty() && operators.peek().getPrecedence() != 4 && op.getPrecedence() < operators.peek().getPrecedence()) {
+			double right = numbers.pop();
+			double left  = numbers.pop();
+			numbers.push(operators.pop().evaluate(left, right));
+		}
+		operators.push(op);
+	}
+	public void pushNumber() {
+		if (!curNum.isEmpty()) {
+			numbers.push(Double.parseDouble(curNum));
+		}
+		curNum = "";
+	}
+	
 	@Override
 	public void start(Stage primaryStage) 
 	{
@@ -71,6 +91,27 @@ public class Calculator extends Application
 		buttonEq = new Button("=");
 		buttonPow = new Button("^");
 		buttonClear = new Button("C");
+		
+		button1.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button2.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button3.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button4.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button5.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button6.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button7.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button8.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button9.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		button0.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonAdd.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonSub.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonMul.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonDiv.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonOParen.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonCParen.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonDec.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonEq.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonPow.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		buttonClear.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
 		// attach a handler to process button clicks 
 		ButtonHandler handler = new ButtonHandler();       
@@ -97,7 +138,7 @@ public class Calculator extends Application
 
 		// setup a grid panel for the keypad
 		GridPane keypad = new GridPane();  
-		keypad.setMinSize(CALC_WIDTH, CALC_HEIGHT); 
+		keypad.setMinSize(screen.getWidth(), screen.getHeight()); 
 		keypad.setPadding(new Insets(10, 10, 10, 10));  
 		keypad.setVgap(5); 
 		keypad.setHgap(5);       
@@ -143,84 +184,97 @@ public class Calculator extends Application
 		@Override 
 		public void handle(ActionEvent e) 
 		{
+			// Numbers and Decimal Point
 			if (e.getSource() == button1) {
-				System.out.println("Button 1 Pressed");
 				screen.appendText("1");
+				curNum = curNum + "1";
 			}
 			else if (e.getSource() == button2) {
-				System.out.println("Button 2 Pressed");
 				screen.appendText("2");
+				curNum = curNum + "2";
 			}
 			else if (e.getSource() == button3) {
-				System.out.println("Button 3 Pressed");
 				screen.appendText("3");
+				curNum = curNum + "3";
 			}
 			else if (e.getSource() == button4) {
-				System.out.println("Button 4 Pressed");
 				screen.appendText("4");
+				curNum = curNum + "4";
 			}
 			else if (e.getSource() == button5) {
-				System.out.println("Button 5 Pressed");
 				screen.appendText("5");
+				curNum = curNum + 5;
 			}
 			else if (e.getSource() == button6) {
-				System.out.println("Button 6 Pressed");
 				screen.appendText("6");
+				curNum = curNum + 6;
 			}
 			else if (e.getSource() == button7) {
-				System.out.println("Button 7 Pressed");
 				screen.appendText("7");
+				curNum = curNum + 7;
 			}
 			else if (e.getSource() == button8) {
-				System.out.println("Button 8 Pressed");
 				screen.appendText("8");
+				curNum = curNum + 8;
 			}
 			else if (e.getSource() == button9) {
-				System.out.println("Button 9 Pressed");
 				screen.appendText("9");
+				curNum = curNum + 9;
 			}
 			else if (e.getSource() == button0) {
-				System.out.println("Button 0 Pressed");
 				screen.appendText("0");
+				curNum = curNum + 0;
 			}
+			else if (e.getSource() == buttonDec) {
+				screen.appendText(".");
+				curNum = curNum + ".";
+			}
+			// OPERATORS
 			else if (e.getSource() == buttonAdd) {
-				System.out.println("Button Add Pressed");
+				pushNumber();
+				operatorHandler(new AddOp());
 				screen.appendText("+");
 			}
 			else if (e.getSource() == buttonSub) {
-				System.out.println("Button Sub Pressed");
+				pushNumber();
+				operatorHandler(new SubOp());
 				screen.appendText("-");
 			}
 			else if (e.getSource() == buttonMul) {
-				System.out.println("Button Mul Pressed");
+				pushNumber();
+				operatorHandler(new MulOp());
 				screen.appendText("*");
 			}
 			else if (e.getSource() == buttonDiv) {
-				System.out.println("Button Div Pressed");
+				pushNumber();
+				operatorHandler(new DivOp());
 				screen.appendText("/");
 			}
 			else if (e.getSource() == buttonOParen) {
-				System.out.println("Button OParen Pressed");
+				operatorHandler(new OParenOp());
 				screen.appendText("(");
 			}
 			else if (e.getSource() == buttonCParen) {
-				System.out.println("Button CParen Pressed");
+				pushNumber();
+				operatorHandler(new CParenOp());
+				operators.pop();
+				operators.pop();
 				screen.appendText(")");
 			}
-			else if (e.getSource() == buttonDec) {
-				System.out.println("Button Dec Pressed");
-				screen.appendText(".");
-			}
 			else if (e.getSource() == buttonEq) {
-				System.out.println("Button Eq Pressed");
-				screen.setText("");
+				pushNumber();
+				operatorHandler(new EqOp());
+				operators.pop();
+				screen.setText(numbers.pop().toString());
 			}
 			else if (e.getSource() == buttonPow) {
-				System.out.println("Button Pow Pressed");
+				pushNumber();
+				operatorHandler(new PowOp());
 				screen.appendText("^");
 			}
 			else if (e.getSource() == buttonClear) {
-				System.out.println("Button Clear Pressed");
+				numbers.removeAllElements();
+				operators.removeAllElements();
 				screen.setText("");
 			}
 		} 
@@ -228,6 +282,6 @@ public class Calculator extends Application
 
 	public static void main(String[] args) 
 	{
-		launch(args);
+		launch(args);	
 	}
 }
