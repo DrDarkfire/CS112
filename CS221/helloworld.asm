@@ -7,5 +7,7 @@
   li $a0, 7
   syscall
   
+  li $v0, 10
+  syscall
 .data
 output: .asciiz "Hello World\n"
