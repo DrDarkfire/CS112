@@ -1,5 +1,7 @@
 .text
   li $sv0, 4
-  li $a0, output
+  la $a0, output
+  syscall
+  
 .data
 output: .asciiz "Hello World\n"
