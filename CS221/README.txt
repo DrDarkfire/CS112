@@ -1,3 +1,4 @@
+// helloworld.asm
 .text                               scripting portion of the code
   li $sv0, 4                        line to prep a type: string                 li = load immediate
   la $a0, output                    line to give the address of the string      la = load address
