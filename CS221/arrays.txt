@@ -1,0 +1,9 @@
+  Array
+  1. Multivalued variable
+  2. Elements are same size
+  3. Continguous
+  
+  AV = Value(base ptr + index * size)
+  
+  int are 4 long so indexes are going 0 4 8 c
+  Person people[] = new Person[10] <- is gonna be a pointer for size.
