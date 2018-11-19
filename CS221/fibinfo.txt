@@ -1,0 +1,30 @@
+fib (n) {
+    if (n <= 1)
+        return 1;
+    else
+        return dab(n - 1) + dab(n - 1)
+}
+
+
+dab (n) {
+return fib(n)
+}
+
+fib:
+    push - 3 - $ra, $a0, $v0
+    save $a0, $ra
+    li $t0, 1
+    sle $t0, $a0, $t0
+    beqz recurse
+        li $v0, 1
+        b reutrn;
+    recurse:
+        addi $a0, $a0, -1
+        jal fib
+        sw $v0, 8($sp)
+        lw $t0, 4($sp)
+        addi $a0, $a0, -2
+        jal fib
+        lw $t0, 8($sp)
+        add $v0, $v0, $t0
+   return
