@@ -1,0 +1,8 @@
+11. decimal
+15. bitmask and then shift the bit
+18. don't do it
+
+in 3 and 4 the .word 0 is for null termination(0 termination)
+
+14. change the adder so it can add the 2's complement
+ripple adder
